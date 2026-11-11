@@ -301,7 +301,7 @@ Planned experiment (Slice 3, if tester count allows): mystery hatch vs. a plain 
 
 ## 12. Build plan (vertical slices)
 
-### Slice 0: `SumiCore` engine + CI ✅ (started)
+### Slice 0: `SumiCore` engine + CI ✅ (done: 48 tests green in CI)
 Pure Swift package `sumi/SumiCore`: night window, events, outcomes, counters, archetypes, seeded RNG, catalog, hatch and evolution. Unit tests for every rule in Sections 4 and 5. GitHub Actions runs `swift test` on macOS.
 **Done when:** CI is green.
 

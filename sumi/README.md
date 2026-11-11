@@ -23,5 +23,5 @@ CI runs the same command on every push that touches `sumi/SumiCore` (`.github/wo
 
 ## Build status
 
-- Slice 0 (SumiCore engine + tests + CI): in progress.
+- Slice 0 (SumiCore engine + tests + CI): done. 48 tests passing on macOS 15 in CI.
 - Slice 0.5 (Screen Time spike on a real iPhone): next. See PRD Section 6.3 for the questions it must answer.
