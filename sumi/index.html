@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sumi · Put your phone down. Wake up to something.</title>
+<meta name="description" content="Sumi locks your scroll apps at bedtime. Keep them closed and your egg hatches by morning. Join the waitlist.">
+<meta property="og:title" content="Sumi · Put your phone down. Wake up to something.">
+<meta property="og:description" content="A bedtime game for people who scroll in bed. Keep your phone down, hatch a creature by morning.">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --night: #0d1024; --night-2: #171b3a; --ink: #f4efe6; --muted: #9aa0c3;
+    --amber: #ffb347; --dawn-1: #ffe3c9; --dawn-2: #cfe0ff; --paper: #fffdf8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--night); color: var(--ink);
+         font: 17px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif; }
+  a { color: inherit; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  .stars { position: absolute; inset: 0; pointer-events: none; opacity: .55; background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 82% 12%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 66% 30%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 30% 42%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 90% 48%, #fff 50%, transparent 51%), radial-gradient(1.5px 1.5px at 45% 8%, #fff 50%, transparent 51%); }
+  header { position: relative; overflow: hidden; padding: 28px 0 72px; }
+  nav { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-weight: 800; letter-spacing: .5px; font-size: 22px; }
+  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; margin-top: 56px; }
+  h1 { font-size: clamp(38px, 6vw, 60px); line-height: 1.05; margin: 0 0 18px; }
+  .lead { color: var(--muted); font-size: 19px; margin: 0 0 28px; max-width: 34ch; }
+  .btn { display: inline-block; background: var(--amber); color: #2a1a00; font-weight: 800; text-decoration: none;
+         padding: 15px 26px; border-radius: 16px; font-size: 17px; border: 0; cursor: pointer; }
+  .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .fine { color: var(--muted); font-size: 14px; margin-top: 12px; }
+  .egg-stage { display: grid; place-items: center; min-height: 320px; }
+  .egg { width: 180px; height: 228px; border-radius: 50% 50% 46% 46% / 58% 58% 42% 42%;
+         background: radial-gradient(circle at 38% 32%, #fff6e6, #f2d9b0 55%, #d9b27d);
+         box-shadow: 0 0 90px rgba(255,179,71,.5); animation: wobble 3.2s ease-in-out infinite; position: relative; }
+  .egg i { position: absolute; width: 24px; height: 18px; border-radius: 50%; background: #e7bf86; }
+  @keyframes wobble { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  @media (prefers-reduced-motion: reduce) { .egg { animation: none; } html { scroll-behavior: auto; } }
+  section { padding: 72px 0; }
+  section h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 12px; }
+  .sub { color: var(--muted); margin: 0 0 36px; max-width: 56ch; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card { background: var(--night-2); border-radius: 22px; padding: 24px; }
+  .card .n { width: 34px; height: 34px; border-radius: 50%; background: var(--amber); color: #2a1a00; font-weight: 800;
+             display: grid; place-items: center; margin-bottom: 14px; }
+  .card h3 { margin: 0 0 6px; font-size: 20px; }
+  .card p { margin: 0; color: var(--muted); }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .receipt { background: var(--paper); color: #222; border-radius: 8px; padding: 22px 24px 18px; max-width: 340px;
+             font: 14px/1.6 "SF Mono", Menlo, Consolas, monospace; position: relative; transform: rotate(-2deg);
+             box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+  .receipt .brand { font: 900 22px -apple-system, Arial, sans-serif; text-align: center; }
+  .receipt .row { display: flex; justify-content: space-between; }
+  .receipt .dash { border-top: 1px dashed #aaa; margin: 8px 0; }
+  .receipt .total { font-size: 20px; font-weight: 800; }
+  .stamp { position: absolute; right: 70px; bottom: 62px; transform: rotate(-12deg); border: 3px solid #e2483d; color: #e2483d;
+           font: 900 26px -apple-system, Arial, sans-serif; padding: 2px 10px; border-radius: 6px; }
+  .dawn { background: linear-gradient(180deg, var(--dawn-1), var(--dawn-2)); color: #23233a; }
+  .dawn .sub { color: #5b5f7a; }
+  .critters { display: flex; gap: 22px; flex-wrap: wrap; }
+  .critter { width: 96px; height: 82px; border-radius: 48% 52% 44% 44% / 60% 60% 40% 40%; position: relative;
+             box-shadow: 0 10px 24px rgba(80,60,160,.25); }
+  .critter::before, .critter::after { content: ""; position: absolute; top: 34px; width: 10px; height: 4px;
+             border-bottom: 3px solid #3a2b66; border-radius: 0 0 8px 8px; }
+  .critter::before { left: 30px; } .critter::after { right: 30px; }
+  .mystery { background: #ffffff66; display: grid; place-items: center; font-weight: 900; font-size: 30px; color: #6b6f8f; box-shadow: none; }
+  .mystery::before, .mystery::after { display: none; }
+  .faq details { background: var(--night-2); border-radius: 16px; padding: 16px 20px; margin-bottom: 12px; }
+  .faq summary { cursor: pointer; font-weight: 700; }
+  .faq p { color: var(--muted); margin: 10px 0 0; }
+  .cta { text-align: center; padding: 88px 0 96px; position: relative; overflow: hidden; }
+  footer { color: var(--muted); font-size: 14px; padding: 24px 20px 40px; text-align: center; }
+  @media (max-width: 760px) {
+    .hero, .split { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .egg-stage { min-height: 260px; order: -1; }
+    .receipt { margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="stars"></div>
+  <div class="wrap">
+    <nav><span class="logo">sumi</span><a class="btn" href="#join" style="padding:10px 18px;font-size:15px">Join the waitlist</a></nav>
+    <div class="hero">
+      <div>
+        <h1>Put your phone down.<br>Wake up to something.</h1>
+        <p class="lead">Sumi locks your scroll apps at bedtime. Keep them closed and your egg hatches by morning.</p>
+        <a class="btn" href="#join">Get early access</a>
+        <p class="fine">iPhone · free during the beta</p>
+      </div>
+      <div class="egg-stage" aria-hidden="true"><div class="egg"><i style="left:44px;top:58px"></i><i style="left:104px;top:132px"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>One more video turns into 2 a.m.</h2>
+    <p class="sub">You know the phone is the problem. Willpower at midnight doesn't work. So Sumi makes the night do the work.</p>
+    <div class="steps">
+      <div class="card"><div class="n">1</div><h3>Pick your bedtime</h3><p>Choose the apps that keep you up. At bedtime they lock by themselves. No button to press.</p></div>
+      <div class="card"><div class="n">2</div><h3>Cheat, but it costs you</h3><p>Need a minute? Ask Sumi. You sign a receipt and pay in sleep. Three a night, max.</p></div>
+      <div class="card"><div class="n">3</div><h3>Wake up to a hatch</h3><p>Keep your phone down and your egg warms up overnight. Two good nights and it hatches.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <h2>Every scroll gets a receipt.</h2>
+      <p class="sub">It's 12:41. You open TikTok. Sumi asks how long, then makes you sign for it. Somehow that's enough to put it down.</p>
+    </div>
+    <div class="receipt" role="img" aria-label="A receipt reading: 1 scroll break, 10 minutes, paid with sleep">
+      <div class="brand">SUMI</div>
+      <div style="text-align:center;color:#777">WED · 00:41</div>
+      <div class="dash"></div>
+      <div class="row"><span>1× SCROLL BREAK</span><span>10 MIN</span></div>
+      <div class="dash"></div>
+      <div class="row total"><span>TOTAL</span><span>10 MIN</span></div>
+      <div class="row"><span>PAID WITH</span><span>SLEEP</span></div>
+      <div style="height:44px;border-bottom:1px solid #999;margin-top:10px"></div>
+      <div style="text-align:center;color:#777;margin-top:8px">RECEIPT 1 OF 3 TONIGHT</div>
+      <div class="stamp">PAID</div>
+    </div>
+  </div>
+</section>
+
+<section class="dawn">
+  <div class="wrap">
+    <h2>Collect them all. Lose nothing.</h2>
+    <p class="sub">12 sleepy creatures, 3 stages each. Hatch a duplicate and it grows up. A bad night never takes anything away. Your egg just rests.</p>
+    <div class="critters" aria-hidden="true">
+      <div class="critter" style="background:radial-gradient(circle at 40% 35%,#fff,#c9b6ff 65%)"></div>
+      <div class="critter" style="background:radial-gradient(circle at 40% 35%,#fff,#ffd29a 65%)"></div>
+      <div class="critter" style="background:radial-gradient(circle at 40% 35%,#fff,#9fe3d0 65%)"></div>
+      <div class="critter" style="background:radial-gradient(circle at 40% 35%,#fff,#f6b4c8 65%)"></div>
+      <div class="critter mystery">?</div>
+      <div class="critter mystery">?</div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <details><summary>Is this a sleep tracker?</summary><p>No. Sumi doesn't measure your sleep or give you a score. It rewards the one thing you control at night: keeping your phone down.</p></details>
+    <details><summary>What if I really need my phone?</summary><p>You can always unlock. Short breaks cost a receipt; an emergency unlock ends tonight's lock. You can also pause any night in advance.</p></details>
+    <details><summary>What does Sumi see?</summary><p>Only whether the lock was opened. Everything stays on your iPhone. No account, no ads.</p></details>
+    <details><summary>When can I get it?</summary><p>We're testing it now. Join the waitlist and you'll be first in the beta.</p></details>
+  </div>
+</section>
+
+<section class="cta" id="join">
+  <div class="stars"></div>
+  <div class="wrap">
+    <h2>Your first egg is waiting.</h2>
+    <p class="sub" style="margin:0 auto 28px">Join the waitlist for the iPhone beta.</p>
+    <!-- Set WAITLIST_URL below to your form link (e.g. a free Tally or Google Form). -->
+    <a class="btn" id="join-link" href="#join">Join the waitlist</a>
+    <p class="fine" id="join-note"></p>
+  </div>
+</section>
+
+<footer>sumi · not a medical device · made for people who scroll in bed</footer>
+
+<script>
+  // Paste your waitlist form link here (Tally, Google Forms, etc.).
+  const WAITLIST_URL = "";
+  const link = document.getElementById("join-link");
+  const note = document.getElementById("join-note");
+  if (WAITLIST_URL) {
+    document.querySelectorAll('a[href="#join"]').forEach(a => { if (a.id === "join-link") { a.href = WAITLIST_URL; a.target = "_blank"; a.rel = "noopener"; } });
+  } else {
+    note.textContent = "Waitlist opening soon.";
+  }
+</script>
+</body>
+</html>
