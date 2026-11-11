@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sumi Hatch Sketches</title>
+<style>
+  :root {
+    --night: #0d1024; --night-2: #171b3a; --ink: #f4efe6; --muted: #9aa0c3;
+    --amber: #ffb347; --amber-soft: #ffd9a0; --dawn-1: #ffe3c9; --dawn-2: #cfe0ff;
+    --paper: #fffdf8; --line: #2a2f55; --rare: #b98cff; --ok: #7be0b0;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9e6df; font: 14px/1.35 -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; color: #1b1b1f; }
+  header { padding: 28px 32px 8px; }
+  header h1 { margin: 0 0 4px; font-size: 22px; }
+  header p { margin: 0; color: #55545c; }
+  .row { display: flex; flex-wrap: wrap; gap: 28px; padding: 24px 32px 40px; }
+  .cell { width: 300px; }
+  .label { font-weight: 700; margin: 0 0 8px; }
+  .note { color: #55545c; font-size: 12.5px; margin-top: 10px; }
+  .phone { width: 300px; height: 620px; border-radius: 42px; border: 10px solid #111; overflow: hidden; position: relative;
+           background: var(--night); color: var(--ink); display: flex; flex-direction: column; padding: 44px 22px 26px; }
+  .status { position: absolute; top: 12px; left: 26px; right: 26px; display: flex; justify-content: space-between; font-size: 12px; opacity: .8; }
+  .dawn { background: linear-gradient(180deg, var(--dawn-1), var(--dawn-2)); color: #23233a; }
+  .center { text-align: center; }
+  .grow { flex: 1; }
+  .title { font-size: 21px; font-weight: 700; margin: 6px 0 6px; }
+  .sub { color: var(--muted); font-size: 13.5px; }
+  .dawn .sub { color: #5b5f7a; }
+  .btn { display: block; width: 100%; border: 0; border-radius: 16px; padding: 14px; font-weight: 700; font-size: 15px;
+         background: var(--amber); color: #2a1a00; text-align: center; }
+  .btn.ghost { background: transparent; color: var(--muted); font-weight: 600; padding: 10px; }
+  .dawn .btn.ghost { color: #5b5f7a; }
+  .chip { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 12px; color: var(--muted); }
+  .egg { width: 120px; height: 150px; margin: 0 auto; border-radius: 50% 50% 46% 46% / 58% 58% 42% 42%;
+         background: radial-gradient(circle at 38% 32%, #fff6e6, #f2d9b0 55%, #d9b27d); box-shadow: 0 0 60px rgba(255,179,71,.45); position: relative; }
+  .egg.cold { box-shadow: 0 0 10px rgba(150,170,255,.25); filter: saturate(.4) brightness(.8); }
+  .egg .spot { position: absolute; width: 18px; height: 14px; border-radius: 50%; background: #e7bf86; }
+  .crack { position: absolute; left: 30px; top: 58px; width: 64px; height: 20px; border-top: 3px solid #8a5a22;
+           clip-path: polygon(0 0, 18% 100%, 36% 0, 54% 100%, 72% 0, 90% 100%, 100% 0); }
+  .stars { position: absolute; inset: 0; background-image:
+    radial-gradient(1.5px 1.5px at 20% 18%, #fff 50%, transparent 51%), radial-gradient(1.5px 1.5px at 72% 12%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 85% 30%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 12% 40%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 60% 34%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 35% 8%, #fff 50%, transparent 51%);
+    opacity: .7; pointer-events: none; }
+  .slider { margin: 18px 4px 6px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--amber), #3b3f6b); position: relative; }
+  .slider .knob { position: absolute; left: 78%; top: -9px; width: 24px; height: 24px; border-radius: 50%; background: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+  .ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+  .shield { background: #1d1f2b; }
+  .shield .icon { width: 64px; height: 64px; border-radius: 18px; background: var(--night-2); margin: 0 auto 14px; display: grid; place-items: center; font-size: 30px; }
+  .receipt { background: var(--paper); color: #222; border-radius: 6px; padding: 14px 16px 12px; font: 12px/1.5 "SF Mono", Menlo, monospace;
+             position: relative; margin-top: 10px; }
+  .receipt:before { content: ""; position: absolute; top: -8px; left: 0; right: 0; height: 8px;
+             background: linear-gradient(-45deg, var(--paper) 4px, transparent 0) 0 0 / 10px 8px, linear-gradient(45deg, var(--paper) 4px, transparent 0) 0 0 / 10px 8px; }
+  .receipt .brand { font: 800 17px -apple-system, Arial, sans-serif; text-align: center; letter-spacing: .5px; }
+  .receipt .dash { border-top: 1px dashed #aaa; margin: 7px 0; }
+  .receipt .row2 { display: flex; justify-content: space-between; }
+  .receipt .total { font-size: 18px; font-weight: 800; }
+  .sign { border-bottom: 1px solid #999; height: 26px; margin-top: 8px; position: relative; }
+  .sign svg { position: absolute; left: 40px; top: -2px; }
+  .stamp { position: absolute; right: 60px; top: 150px; transform: rotate(-12deg); border: 3px solid #e2483d; color: #e2483d;
+           font: 900 22px -apple-system, Arial, sans-serif; padding: 2px 8px; border-radius: 6px; opacity: .9; }
+  .opts { display: flex; gap: 8px; margin: 12px 0 8px; }
+  .opts span { flex: 1; text-align: center; border: 1px solid var(--line); border-radius: 12px; padding: 9px 0; font-weight: 700; color: var(--ink); }
+  .opts span.on { background: var(--amber); color: #2a1a00; border-color: var(--amber); }
+  .creature { width: 132px; height: 112px; margin: 0 auto; position: relative; border-radius: 48% 52% 44% 44% / 60% 60% 40% 40%;
+              background: radial-gradient(circle at 40% 35%, #f6f1ff, #c9b6ff 60%, #9f86ea); box-shadow: 0 10px 30px rgba(120,90,220,.35); }
+  .creature:before, .creature:after { content: ""; position: absolute; top: 44px; width: 10px; height: 4px; border-radius: 0 0 8px 8px; border-bottom: 3px solid #3a2b66; }
+  .creature:before { left: 42px; } .creature:after { right: 42px; }
+  .wing { position: absolute; top: 18px; width: 54px; height: 64px; background: rgba(255,255,255,.65); border-radius: 60% 40% 60% 40%; }
+  .wing.l { left: -34px; transform: rotate(-20deg); } .wing.r { right: -34px; transform: rotate(20deg) scaleX(-1); }
+  .shell { display: flex; justify-content: center; gap: 70px; margin-top: -6px; }
+  .shell i { width: 46px; height: 26px; background: #f2d9b0; border-radius: 0 0 24px 24px; clip-path: polygon(0 0, 20% 40%, 40% 0, 60% 40%, 80% 0, 100% 0, 100% 100%, 0 100%); }
+  .badge { display: inline-block; background: #ffffffaa; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 700; color: #5b46b8; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+  .slot { aspect-ratio: 1; border-radius: 16px; background: var(--night-2); display: grid; place-items: center; font-size: 12px; color: var(--muted); position: relative; }
+  .slot .blob { width: 46px; height: 40px; border-radius: 48% 52% 44% 44% / 60% 60% 40% 40%; }
+  .slot .q { font-size: 22px; font-weight: 800; color: #3b3f6b; }
+  .slot .dots { position: absolute; bottom: 6px; display: flex; gap: 3px; }
+  .slot .dots b { width: 6px; height: 6px; border-radius: 50%; background: #3b3f6b; }
+  .slot .dots b.on { background: var(--amber); }
+  .slot.rare { outline: 1.5px solid var(--rare); }
+  .tiny { font-size: 11px; color: var(--muted); }
+  .moon { position: absolute; top: 54px; right: 30px; width: 34px; height: 34px; border-radius: 50%; box-shadow: -8px 4px 0 0 var(--amber-soft); transform: rotate(-20deg); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sumi: Hatch flow sketches (PRD v2)</h1>
+  <p>Low-fidelity layout and copy only. Shapes are placeholders until the art direction (PRD Q1/Q2) is decided.</p>
+</header>
+
+<div class="row">
+
+  <!-- 1. Onboarding slider -->
+  <div class="cell">
+    <p class="label">1 · Onboarding: the bedtime slider</p>
+    <div class="phone">
+      <div class="status"><span>21:42</span><span>●●●</span></div>
+      <div class="stars" style="opacity:.25"></div>
+      <div class="sub">Step 7 of 15</div>
+      <div class="title">Drag your bedtime later.</div>
+      <div class="sub">Watch what happens to your egg.</div>
+      <div class="grow" style="display:grid;place-items:center"><div class="egg cold"><span class="spot" style="left:30px;top:40px"></span><span class="spot" style="left:70px;top:86px"></span></div></div>
+      <div class="center" style="font-weight:700;font-size:28px">02:10</div>
+      <div class="slider"><span class="knob"></span></div>
+      <div class="ticks"><span>23:00</span><span>00:00</span><span>01:00</span><span>02:30</span></div>
+      <div style="height:16px"></div>
+      <div class="btn">This is me some nights</div>
+    </div>
+    <p class="note">The egg cools and the stars fade as the knob moves right. Never gross, never sad. Brainrot's rot slider, made cozy.</p>
+  </div>
+
+  <!-- 2. Home, day -->
+  <div class="cell">
+    <p class="label">2 · Home (day)</p>
+    <div class="phone">
+      <div class="status"><span>18:05</span><span>●●●</span></div>
+      <div class="moon"></div>
+      <div class="sub">Egg #3</div>
+      <div class="title">It cracked a little.</div>
+      <div class="grow" style="display:grid;place-items:center"><div class="egg"><span class="spot" style="left:28px;top:36px"></span><span class="spot" style="left:72px;top:90px"></span><span class="crack"></span></div></div>
+      <div class="center" style="margin-bottom:10px">Tonight: lock <b>23:30</b> · unlock <b>07:30</b></div>
+      <div class="center" style="margin-bottom:16px"><span class="chip">Good nights this week: 4</span> <span class="chip">✨ 3 cozy nights</span></div>
+      <div class="btn">Collection</div>
+      <div class="btn ghost">Pause tonight</div>
+    </div>
+    <p class="note">One primary action. "Pause tonight" is guilt-free (max 2 a week). No streak-loss copy anywhere.</p>
+  </div>
+
+  <!-- 3. Shield -->
+  <div class="cell">
+    <p class="label">3 · Shield (opening a locked app at night)</p>
+    <div class="phone shield">
+      <div class="status"><span>00:41</span><span>●●●</span></div>
+      <div class="grow" style="display:flex;flex-direction:column;justify-content:center;text-align:center">
+        <div class="icon">🥚</div>
+        <div class="title">It's 00:41.<br>Your egg is sleeping.</div>
+        <div class="sub" style="margin-top:6px">Unlocking costs sleep.</div>
+      </div>
+      <div class="btn">Close app</div>
+      <div class="btn ghost">Ask Sumi</div>
+    </div>
+    <p class="note">Apple's shield UI: icon, title, subtitle, two buttons only. "Ask Sumi" → a notification that opens the receipt [VERIFY in Slice 0.5].</p>
+  </div>
+
+  <!-- 4. Receipt -->
+  <div class="cell">
+    <p class="label">4 · Receipt (the friction moment)</p>
+    <div class="phone">
+      <div class="status"><span>00:42</span><span>●●●</span></div>
+      <div class="sub center">Sumi, rubbing its eyes:</div>
+      <div class="title center">A little scrolling? How long?</div>
+      <div class="opts"><span>5</span><span class="on">10</span><span>15</span></div>
+      <div class="receipt">
+        <div class="brand">SUMI</div>
+        <div class="center" style="color:#777">WED, NOV 11 · 00:42</div>
+        <div class="dash"></div>
+        <div class="row2"><span>1× SCROLL BREAK</span><span>10 MIN</span></div>
+        <div class="dash"></div>
+        <div class="row2 total"><span>TOTAL</span><span>10 MIN</span></div>
+        <div class="row2"><span>PAID WITH</span><span>SLEEP</span></div>
+        <div class="sign"><svg width="140" height="30"><path d="M5 22 C 25 2, 40 30, 60 14 S 95 6, 130 18" stroke="#2f5bd3" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
+        <div class="center" style="color:#777;margin-top:6px">RECEIPT 1 OF 3 TONIGHT</div>
+        <div class="stamp">PAID</div>
+      </div>
+      <div class="grow"></div>
+      <div class="btn ghost" style="color:var(--ink)">Never mind, back to bed</div>
+    </div>
+    <p class="note">Sign with a finger → PAID stamp → apps unlock for 10 min, then re-lock on their own. Max 3 a night, then only "Emergency unlock".</p>
+  </div>
+
+  <!-- 5. Morning reveal -->
+  <div class="cell">
+    <p class="label">5 · Morning reveal (hatch)</p>
+    <div class="phone dawn">
+      <div class="status"><span>07:42</span><span>●●●</span></div>
+      <div class="sub center">Night of Nov 10 · phone down all night</div>
+      <div class="grow" style="display:flex;flex-direction:column;justify-content:center">
+        <div class="center" style="margin-bottom:14px"><span class="badge">NEW!</span></div>
+        <div class="creature"><span class="wing l"></span><span class="wing r"></span></div>
+        <div class="shell"><i></i><i></i></div>
+        <div class="title center" style="margin-top:16px">Moonmoth hatched</div>
+        <div class="sub center">Common · stage 1 of 3</div>
+        <div class="center" style="margin-top:12px"><span class="chip" style="color:#5b5f7a;border-color:#b9c3e6">0 receipts · ✨ 3 cozy nights</span></div>
+      </div>
+      <div class="btn">Share</div>
+      <div class="btn ghost">See collection</div>
+    </div>
+    <p class="note">Under 10 seconds. Non-hatch mornings show the egg warmer or cracking. A restless night says "the egg is resting". Nothing is lost.</p>
+  </div>
+
+  <!-- 6. Collection -->
+  <div class="cell">
+    <p class="label">6 · Collection</p>
+    <div class="phone">
+      <div class="status"><span>12:10</span><span>●●●</span></div>
+      <div class="title">Collection</div>
+      <div class="sub">5 of 12 found · Nights together: 23</div>
+      <div class="grid">
+        <div class="slot"><span class="blob" style="background:#c9b6ff"></span><span class="dots"><b class="on"></b><b class="on"></b><b></b></span></div>
+        <div class="slot"><span class="blob" style="background:#ffd29a"></span><span class="dots"><b class="on"></b><b></b><b></b></span></div>
+        <div class="slot"><span class="blob" style="background:#9fe3d0"></span><span class="dots"><b class="on"></b><b class="on"></b><b class="on"></b></span></div>
+        <div class="slot"><span class="q">?</span></div>
+        <div class="slot"><span class="blob" style="background:#f6b4c8"></span><span class="dots"><b class="on"></b><b></b><b></b></span></div>
+        <div class="slot"><span class="q">?</span></div>
+        <div class="slot"><span class="q">?</span></div>
+        <div class="slot"><span class="blob" style="background:#a9c4ff"></span><span class="dots"><b class="on"></b><b></b><b></b></span></div>
+        <div class="slot"><span class="q">?</span></div>
+        <div class="slot"><span class="q">?</span></div>
+        <div class="slot rare"><span class="q">?</span></div>
+        <div class="slot rare"><span class="q">?</span></div>
+      </div>
+      <div class="grow"></div>
+      <div class="tiny center">Duplicates evolve: hatch one again to grow it to stage 2, then 3.</div>
+    </div>
+    <p class="note">12 species × 3 stages. Rare slots get a purple outline so there's something to chase. A full set takes ~72 good nights.</p>
+  </div>
+
+</div>
+</body>
+</html>
